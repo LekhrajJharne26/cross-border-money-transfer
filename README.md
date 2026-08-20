@@ -39,16 +39,6 @@ The frontend is built using plain HTML, CSS, and Vanilla JavaScript and is serve
 - Fetch API
 - Responsive Design
 
-### Frontend does NOT require
-
-- React
-- TypeScript
-- Vite
-- Angular
-- Vue
-- Node.js
-- npm
-
 The frontend runs directly through the Spring Boot application.
 
 ## ✨ Features
