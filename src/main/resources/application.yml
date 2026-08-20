@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/cross_border_db
     username: root
-    password: Iamback@2
+    password: ############
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -33,7 +33,7 @@ server:
 application:
   security:
     jwt:
-      secret: VGhpcy1pcy1hLWRldmVsb3BtZW50LXNlY3JldC1rZXktMzItYnl0ZXM=
+      secret: #############################
       expiration-ms: 900000
 
 springdoc:
