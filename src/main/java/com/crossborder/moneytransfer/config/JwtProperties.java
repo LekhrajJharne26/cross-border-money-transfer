@@ -1,0 +1,18 @@
+package com.crossborder.moneytransfer.config;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
+
+@Getter
+@Setter
+@Validated
+@ConfigurationProperties(prefix = "application.security.jwt")
+/** Binds validated JWT signing and lifetime settings from application configuration. */
+public class JwtProperties {
+    @NotBlank private String secret;
+    @Positive private long expirationMs;
+}

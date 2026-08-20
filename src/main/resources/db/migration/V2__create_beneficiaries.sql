@@ -1,0 +1,20 @@
+CREATE TABLE beneficiaries (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    mobile_number VARCHAR(30) NOT NULL,
+    email VARCHAR(254) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    state VARCHAR(100) NOT NULL,
+    postal_code VARCHAR(20) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    government_id_number VARCHAR(100) NOT NULL,
+    relationship VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP(6) NOT NULL,
+    updated_at TIMESTAMP(6) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_beneficiaries_user FOREIGN KEY (user_id) REFERENCES users (id),
+    INDEX idx_beneficiaries_user_created_at (user_id, created_at)
+);
