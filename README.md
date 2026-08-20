@@ -1,73 +1,176 @@
-# CrossBorderMoneyTransfer
+# CrossBorder Money Transfer
 
-Initial Spring Boot foundation with a complete authentication module for a cross-border money transfer platform. Beneficiary, transaction, and all other business modules are intentionally excluded.
+A full-stack **Cross Border Money Transfer System** built with Java 17, Spring Boot 3, Spring Security, JWT, Spring Data JPA, Hibernate, MySQL, Flyway, Swagger/OpenAPI, and a lightweight HTML/CSS/JavaScript frontend.
 
-## Requirements and run
+The application simulates an international money-transfer platform where users can register, authenticate securely, manage beneficiaries, select countries and banking partners, create money-transfer transactions, and view transaction history.
 
-Use Java 17, Maven 3.9+, and MySQL 8+. Configure the environment and start:
+## 🚀 Project Overview
 
-```powershell
-$env:DB_USERNAME = "root"
-$env:DB_PASSWORD = "your-password"
-$env:JWT_SECRET = "<Base64-encoded-secret-of-at-least-32-bytes>"
-mvn spring-boot:run
-```
+The application follows this workflow:
 
-The default database is `cross_border_money_transfer`. Hibernate uses `ddl-auto: validate`, so it neither creates nor alters schema. Open Swagger at `http://localhost:8080/api/swagger-ui.html`.
+User → Register → Login → JWT Authentication → Dashboard → Manage Beneficiaries → Select Country → Select Banking Partner → Enter Transfer Details → Create Transaction → View Transaction History
 
-Flyway applies the initial `users` table migration automatically at startup. The authentication endpoints are public:
+The backend provides REST APIs protected by Spring Security and JWT authentication.
 
-- `POST /api/v1/auth/register`
-- `POST /api/v1/auth/login`
+The frontend is built using plain HTML, CSS, and Vanilla JavaScript and is served directly by the Spring Boot application.
 
-Beneficiary endpoints require `Authorization: Bearer <access-token>`:
+## 🛠️ Technology Stack
 
-- `POST /api/v1/beneficiaries`
-- `GET /api/v1/beneficiaries`
-- `GET /api/v1/beneficiaries/{beneficiaryId}`
-- `PUT /api/v1/beneficiaries/{beneficiaryId}`
-- `DELETE /api/v1/beneficiaries/{beneficiaryId}`
+### Backend
 
-## File guide
+- Java 17
+- Spring Boot 3
+- Spring Security
+- JWT Authentication
+- Spring Data JPA
+- Hibernate
+- MySQL 8
+- Flyway
+- Bean Validation
+- Lombok
+- Maven
+- Swagger / OpenAPI
 
-| File | Purpose |
-| --- | --- |
-| `pom.xml` | Maven build and Java 17, Spring Boot, JPA, Security, Validation, MySQL, Lombok, JWT, and OpenAPI dependencies. |
-| `CrossBorderMoneyTransferApplication.java` | Spring Boot entry point and JWT property binding registration. |
-| `config/JwtProperties.java` | Validated external JWT configuration. |
-| `config/SecurityConfig.java` | Stateless security configuration: Swagger and health are public; APIs require authentication and unauthenticated access returns 401. |
-| `config/OpenApiConfig.java` | Swagger metadata and Bearer-JWT security scheme. |
-| `security/JwtService.java` | Signs JWTs and verifies/parses their claims. |
-| `security/JwtAuthenticationFilter.java` | Reads valid Bearer tokens and establishes the request principal. |
-| `dto/ApiResponse.java` | Generic response envelope for successful and failed API responses. |
-| `exception/GlobalExceptionHandler.java` | Central validation, malformed-request, and unexpected-error handling. |
-| `application.yml` | Environment-driven MySQL, Hibernate, server, JWT, and Swagger configuration. |
-| `db/migration/V1__create_users.sql` | Flyway migration that creates the authentication users table. |
-| `auth/controller/AuthController.java` | Swagger-documented registration and login HTTP endpoints. |
-| `auth/dto/*.java` | Validated input DTOs and the token response DTO; no entity is exposed over HTTP. |
-| `auth/service/*.java` | Authentication use-case contract and implementation. |
-| `user/entity/User.java` | JPA user entity and Spring Security principal implementation. |
-| `user/model/Role.java` | `ADMIN` and `USER` access-level enum. |
-| `user/repository/UserRepository.java` | JPA persistence gateway for users. |
-| `user/service/*.java` | User lookup and persistence abstraction/implementation. |
-| `exception/DuplicateResourceException.java` | Signals a uniqueness conflict, such as a duplicate registration email. |
-| `exception/InvalidCredentialsException.java` | Signals a generic login failure without exposing whether an email exists. |
-| `exception/ResourceNotFoundException.java` | Signals a missing persisted resource for internal service lookups. |
-| `beneficiary/entity/Beneficiary.java` | Owner-linked JPA entity, recipient fields, and automatic creation/update timestamps. |
-| `beneficiary/repository/BeneficiaryRepository.java` | Owner-scoped JPA queries that prevent cross-user record access. |
-| `beneficiary/dto/BeneficiaryRequest.java` | Validated create/update request payload. |
-| `beneficiary/dto/BeneficiaryResponse.java` | Beneficiary data returned to the authenticated owner. |
-| `beneficiary/service/BeneficiaryService.java` | Beneficiary use-case contract. |
-| `beneficiary/service/impl/BeneficiaryServiceImpl.java` | Transactional CRUD and owner authorization implementation. |
-| `beneficiary/controller/BeneficiaryController.java` | Secured, Swagger-documented beneficiary API endpoints. |
-| `db/migration/V2__create_beneficiaries.sql` | Flyway migration for beneficiary storage and its user foreign key. |
+### Frontend
 
-## Package layout
+- HTML5
+- CSS3
+- Vanilla JavaScript (ES6)
+- Fetch API
+- Responsive Design
+
+### Frontend does NOT require
+
+- React
+- TypeScript
+- Vite
+- Angular
+- Vue
+- Node.js
+- npm
+
+The frontend runs directly through the Spring Boot application.
+
+## ✨ Features
+
+### 🔐 Authentication
+
+- User registration
+- User login
+- BCrypt password hashing
+- JWT access-token authentication
+- Stateless Spring Security
+- Role-based user model
+- Protected REST APIs
+- 401 Unauthorized handling
+- Centralized exception handling
+- Request validation
+
+### 👤 Beneficiary Management
+
+Authenticated users can:
+
+- Add beneficiaries
+- View beneficiaries
+- View individual beneficiary
+- Update beneficiaries
+- Delete beneficiaries
+
+Beneficiaries are owner-scoped so one user cannot access another user's beneficiaries.
+
+### 🌍 Countries
+
+- View supported countries
+- Active country management
+- Country-based banking partner lookup
+
+Seeded countries include:
+
+- India
+- Nepal
+- Philippines
+- USA
+
+### 🏦 Banking Partners
+
+- View banking partners
+- Retrieve partners by country
+- Active banking-partner filtering
+- Country → Banking Partner relationship
+
+### 💸 Money Transfer
+
+Users can create a transaction using:
+
+- Beneficiary
+- Banking Partner
+- Amount
+- Currency
+- Purpose
+- Remarks
+
+### 📊 Transaction History
+
+Transaction information includes:
+
+- Transaction number
+- Beneficiary
+- Banking partner
+- Amount
+- Currency
+- Status
+- Created date
+
+### 🖥️ Frontend
+
+The frontend includes:
+
+- Login
+- Registration
+- Dashboard
+- Beneficiaries
+- Countries
+- Banking Partners
+- Send Money
+- Transaction History
+- Profile
+- Responsive navigation
+- Form validation
+- Notifications
+- Loading states
+- Empty states
+- 404 page
+
+## 🏗️ Application Architecture
 
 ```text
-com.crossborder.moneytransfer
-├── config       # cross-cutting configuration
-├── dto          # API data-transfer objects
-├── exception    # centralized error handling
-└── security     # JWT infrastructure
-```
+                         ┌─────────────────────────┐
+                         │        Browser          │
+                         │   HTML / CSS / JS       │
+                         └────────────┬────────────┘
+                                      │
+                                      │ REST / HTTP
+                                      ▼
+                         ┌─────────────────────────┐
+                         │      Spring Boot        │
+                         │          /api            │
+                         └────────────┬────────────┘
+                                      │
+                    ┌─────────────────┼─────────────────┐
+                    │                 │                 │
+                    ▼                 ▼                 ▼
+              Controllers        Services          Security
+                    │                 │                 │
+                    ▼                 ▼                 ▼
+                  DTOs          Repositories        JWT Filter
+                                      │
+                                      ▼
+                               ┌─────────────┐
+                               │    MySQL    │
+                               └──────┬──────┘
+                                      ▲
+                                      │
+                               ┌──────┴──────┐
+                               │   Flyway    │
+                               │ Migrations  │
+                               └─────────────┘
